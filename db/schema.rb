@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812021820) do
+ActiveRecord::Schema.define(version: 20170814014906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,4 +23,15 @@ ActiveRecord::Schema.define(version: 20170812021820) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "responses", force: :cascade do |t|
+    t.text "response_text"
+    t.integer "likes"
+    t.integer "dislikes"
+    t.bigint "clarification_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clarification_id"], name: "index_responses_on_clarification_id"
+  end
+
+  add_foreign_key "responses", "clarifications"
 end

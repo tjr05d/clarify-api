@@ -15,21 +15,26 @@ class ClarificationsController < ApplicationController
 
   # POST /clarifications
   def create
-    #find records that come from the same url
-    #search them for commonn words.
-    #if the request has 70% tokens in common with the selected text, return a canned response, 
-    #if not offer other suggested responses from similar token sets
     url = clarification_params[:url]
     selection = clarification_params[:selection]
     
-    similiar_clarifications =  Clarification.check_for_similar(url, selection)
-    # @clarification = Clarification.new(clarification_params)
+    @similiar_clarifications =  Clarification.check_for_similar(url, selection)
 
-    if @clarification.save
-      render json: @clarification, status: :created, location: @clarification
+    if @similiar_clarifications.empty?
+      p "didn't find anything"
+      #here a new ticket request should be made for an expert to go out and find a clarification solution.
+      @clarification = Clarification.new(clarification_params)
+      if @clarification.save
+        render json: @clarification, status: :created, location: @clarification
+      else
+        render json: @clarification.errors, status: :unprocessable_entity
+      end
     else
-      render json: @clarification.errors, status: :unprocessable_entity
-    end
+      p "found something"
+      @responses = @similiar_clarifications.map(&:responses).flatten
+      #should return the clarification resources that exist for this text in ranked order.
+      render json: @responses
+    end 
   end
 
   # PATCH/PUT /clarifications/1

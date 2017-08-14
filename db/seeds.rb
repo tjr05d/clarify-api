@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Response.destroy_all
+Clarification.all.each do | cl |
+    Response.create(response_text: "Hey look at this",  likes: 0, dislikes: 0, clarification_id: cl.id)
+end 
