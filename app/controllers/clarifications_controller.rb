@@ -25,7 +25,7 @@ class ClarificationsController < ApplicationController
       #here a new ticket request should be made for an expert to go out and find a clarification solution.
       @clarification = Clarification.new(clarification_params)
       if @clarification.save
-        render json: @clarification, status: :created, location: @clarification
+        render json: @clarification.responses, status: :created, location: @clarification
       else
         render json: @clarification.errors, status: :unprocessable_entity
       end
