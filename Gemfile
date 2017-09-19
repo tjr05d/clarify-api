@@ -12,7 +12,10 @@ gem 'rails', '~> 5.1.3'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+#auth
+gem 'devise'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'simple_token_authentication'
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
