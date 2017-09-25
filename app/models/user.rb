@@ -69,5 +69,4 @@ class User < ApplicationRecord
         self.access_token = User.new_token
       end while self.class.exists?(access_token: access_token)
     end
-
 end
